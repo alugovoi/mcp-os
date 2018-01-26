@@ -1,0 +1,13 @@
+classes:
+- cluster.sl.openstack.upgrade
+parameters:
+  _param:
+    linux_system_codename: xenial
+    salt_master_host: 192.168.10.91
+    single_address: 192.168.10.19
+  linux:
+    system:
+      name: upg01
+      domain: sl.local
+      cluster: default
+      environment: prd

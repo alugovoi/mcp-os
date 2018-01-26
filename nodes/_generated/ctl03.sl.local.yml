@@ -1,0 +1,16 @@
+classes:
+- cluster.sl.openstack.control
+parameters:
+  _param:
+    keepalived_vip_priority: 101
+    linux_system_codename: xenial
+    opencontrail_database_id: 3
+    rabbitmq_cluster_role: slave
+    salt_master_host: 192.168.10.91
+    single_address: 192.168.10.92
+  linux:
+    system:
+      name: ctl03
+      domain: sl.local
+      cluster: default
+      environment: prd

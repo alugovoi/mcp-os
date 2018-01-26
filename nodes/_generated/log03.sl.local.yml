@@ -1,0 +1,15 @@
+classes:
+- cluster.sl.stacklight.log
+- cluster.sl.stacklight.log_curator
+parameters:
+  _param:
+    keepalived_vip_priority: 101
+    linux_system_codename: xenial
+    salt_master_host: 192.168.10.91
+    single_address: 192.168.10.63
+  linux:
+    system:
+      name: log03
+      domain: sl.local
+      cluster: default
+      environment: prd

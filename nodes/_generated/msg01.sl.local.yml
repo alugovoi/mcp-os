@@ -1,0 +1,15 @@
+classes:
+- cluster.sl.openstack.message_queue
+parameters:
+  _param:
+    keepalived_vip_priority: 103
+    linux_system_codename: trusty
+    rabbitmq_cluster_role: master
+    salt_master_host: 192.168.10.91
+    single_address: 192.168.10.41
+  linux:
+    system:
+      name: msg01
+      domain: sl.local
+      cluster: default
+      environment: prd

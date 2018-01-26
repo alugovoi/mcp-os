@@ -1,0 +1,14 @@
+classes:
+- cluster.sl.openstack.proxy
+parameters:
+  _param:
+    keepalived_vip_priority: 102
+    linux_system_codename: trusty
+    salt_master_host: 192.168.10.91
+    single_address: 192.168.10.95
+  linux:
+    system:
+      name: prx01
+      domain: sl.local
+      cluster: default
+      environment: prd

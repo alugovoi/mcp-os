@@ -2,8 +2,8 @@ parameters:
   _param:
     openstack_compute_node01_hostname: cmp01
     openstack_compute_node02_hostname: cmp02
-    openstack_compute_node01_address: 172.16.10.105
-    openstack_compute_node02_address: 172.16.10.106
+    openstack_compute_node01_address: 192.168.10.105
+    openstack_compute_node02_address: 192.168.10.106
   reclass:
     storage:
       node:

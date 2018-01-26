@@ -1,0 +1,19 @@
+classes:
+- system.docker.swarm.master
+- cluster.sl.stacklight.client
+- cluster.sl.stacklight.server
+- system.docker.swarm.master
+- cluster.sl.oss.client
+- cluster.sl.oss.server
+parameters:
+  _param:
+    keepalived_vip_priority: 103
+    linux_system_codename: xenial
+    salt_master_host: 192.168.10.91
+    single_address: 192.168.10.103
+  linux:
+    system:
+      name: mon01
+      domain: sl.local
+      cluster: default
+      environment: prd

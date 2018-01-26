@@ -1,0 +1,194 @@
+classes:
+- system.docker.client
+# PostgreSQL
+- system.postgresql.client.pushkin
+- system.postgresql.client.rundeck
+- system.postgresql.client.alertmanager
+- system.postgresql.client.security_monkey
+- system.postgresql.client.janitor_monkey
+
+# Elasticsearch
+- system.elasticsearch.client
+- system.elasticsearch.client.index.pushkin
+- system.elasticsearch.client.index.cis_openstack
+
+# DevOps Portal
+- service.devops_portal.config
+# Rundeck
+- system.rundeck.server.docker
+- system.rundeck.client
+- system.rundeck.client.project.cicd
+# OSS Tooling
+- system.docker.swarm.stack.devops_portal
+- system.docker.swarm.stack.hce
+- system.docker.swarm.stack.postgresql
+- system.docker.swarm.stack.pushkin
+- system.docker.swarm.stack.rundeck
+- system.docker.swarm.stack.security_monkey
+- system.docker.swarm.stack.janitor_monkey
+
+# Docker networks
+- system.docker.swarm.network.oss_backend
+
+# DevOps Portal services
+- system.devops_portal.service.elasticsearch
+- system.devops_portal.service.gerrit
+- system.devops_portal.service.jenkins
+- system.devops_portal.service.pushkin
+- system.devops_portal.service.rundeck
+- system.devops_portal.service.hce
+- system.devops_portal.service.stacklight-grafana
+- system.devops_portal.service.stacklight-kibana
+- system.devops_portal.service.stacklight-prometheus
+- system.devops_portal.service.grafana
+- system.devops_portal.service.security_monkey
+- system.devops_portal.service.janitor_monkey
+- cluster.sl.infra
+
+parameters:
+  _param:
+    docker_image_devops_portal: docker-prod-local.artifactory.mirantis.com/mirantis/oss/devops-portal:latest
+    docker_image_elasticsearch: docker.elastic.co/elasticsearch/elasticsearch:5.4.1
+    docker_image_janitor_monkey: docker-prod-local.artifactory.mirantis.com/mirantis/oss/janitor-monkey:latest
+    docker_image_mongodb: library/mongo:3.4
+    docker_image_postgresql: library/postgres:9.6
+    docker_image_pushkin: docker-prod-local.artifactory.mirantis.com/mirantis/oss/pushkin:latest
+    docker_image_rundeck: docker-prod-local.artifactory.mirantis.com/mirantis/oss/rundeck:latest
+    docker_image_security_monkey_api: docker-prod-local.artifactory.mirantis.com/mirantis/oss/security-monkey-api:latest
+    docker_image_security_monkey_scheduler: docker-prod-local.artifactory.mirantis.com/mirantis/oss/security-monkey-scheduler:latest
+    docker_image_hce: docker-prod-local.artifactory.mirantis.com/mirantis/oss/hce:latest
+    # PostgreSQL
+    postgresql_admin_user_password: 8SLQQkTmhGQPaCgs
+    postgresql_client_user: ${_param:postgresql_admin_user}
+    postgresql_client_password: ${_param:postgresql_admin_user_password}
+    postgresql_client_host: ${_param:haproxy_postgresql_bind_host}
+    postgresql_client_port: ${_param:haproxy_postgresql_bind_port}
+    # HCE
+    hce_elasticsearch_host: ${_param:elasticsearch_bind_host}
+    hce_elasticsearch_port: ${_param:elasticsearch_http_bind_port}
+    hce_prometheus_host: ${_param:stacklight_monitor_address}
+    hce_prometheus_port: ${_param:stacklight_prometheus_port}
+
+    # Pushkin
+    pushkin_db_user: pushkin
+    pushkin_db_user_password: KyeF2adWBVcvf0fj
+    pushkin_db_host: ${_param:haproxy_postgresql_bind_host}
+    pushkin_smtp_host: 
+    pushkin_smtp_port: 587
+    pushkin_email_sender_password: password
+    #..WebHook notification senders
+    webhook_from: test@example.com
+    webhook_recipients: test@example.com
+    webhook_login_id: 13
+    webhook_application_id: 24
+
+    # OSS OpenStack
+    oss_openstack_username: admin
+    oss_openstack_password: nova
+    oss_openstack_http_prefix: http
+    oss_openstack_endpoint_address: ${_param:cluster_public_host}
+    oss_openstack_auth_url: ${_param:oss_openstack_http_prefix}://${_param:oss_openstack_endpoint_address}:5000/v3
+    oss_openstack_project: admin
+    oss_openstack_domain_id: default
+    oss_openstack_username_domain_id: default
+    oss_openstack_ssl_verify: False
+    oss_openstack_endpoint_type: public
+    oss_openstack_credentials_path: /srv/volumes/rundeck/storage
+    oss_openstack_cert: |
+            -----BEGIN CERTIFICATE----- MIIE0DCCA7igAwIBAgIBBzANBgkqhkiG9w0BAQsFADCBgzELMAkGA1UEBhMCVVMx EDAOBgNVBAgTB0FyaXpvbmExEzARBgNVBAcTClNjb3R0c2RhbGUxGjAYBgNVBAoT AAGjggEaMIIBFjAPBgNVHRMBAf8EBTADAQH/MA4GA1UdDwEB/wQEAwIBBjAdBgNV 91cxG7685C/b+LrTW+C05+Z5Yg4MotdqY3MxtfWoSKQ7CC2iXZDXtHwlTxFWMMS2 -----END CERTIFICATE----- -----BEGIN CERTIFICATE----- dGhvcml0eSAtIEcyMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAv3Fi 9kIDN0zmiN/VryTyscPfzLXs4Jlet0lUIDyUGAzHHFIYSaRt4bNYC8...
+    # SecurityMonkey
+    secmonkey_db_user: secmonkey
+    secmonkey_db_user_password: PcIda5CmW1SZmooh
+    secmonkey_db_host: ${_param:postgresql_bind_host}
+    security_monkey_openstack:
+      username: ${_param:oss_openstack_username}
+      password: ${_param:oss_openstack_password}
+      auth_url: ${_param:oss_openstack_auth_url}
+      user_domain_name: ${_param:oss_openstack_domain_id}
+      project_domain_name: ${_param:oss_openstack_domain_id}
+      ssl_verify: ${_param:oss_openstack_ssl_verify}
+      endpoint_type: ${_param:oss_openstack_endpoint_type}
+      source_credentials: ${_param:oss_openstack_credentials_path}
+    # JanitorMonkey
+    docker_mongodb_admin_username: admin
+    docker_mongodb_admin_password: JU64xdZHKJH2NlGz
+    janitor_monkey_mongodb_host: ${_param:haproxy_mongodb_bind_host}
+    janitor_monkey_openstack:
+      username: ${_param:oss_openstack_username}
+      password: ${_param:oss_openstack_password}
+      auth_url: ${_param:oss_openstack_auth_url}
+      project_name: ${_param:oss_openstack_project}
+      project_domain_name: ${_param:oss_openstack_username_domain_id}
+      ssl_verify: ${_param:oss_openstack_ssl_verify}
+      endpoint_type: ${_param:oss_openstack_endpoint_type}
+      source_credentials: ${_param:oss_openstack_credentials_path}
+
+    # Rundeck DB support
+
+    rundeck_runbook_public_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCmu+gD7MhykJ1/1nizuotfG/SI65W7GoRED67jCtMpHexZQvr7o2RCgayyhbohj/k1yYDosBDD/hmvHRdzjmHEknVqd2fG8U0rAop/Qpy+a8175O7YbatIUoEcx9b2PXoZNppHRKVXRNjzGDZBhadNLm2AIbQVCIHbrclGWmjNtBzLdTLlk3ASD/MXLKgIiO0HfIK+ky3JfxWg9gZijC3I/u00xoessc0NQnsoh1BSsXUiMv2+lXEqOp5UNXxxBf6SGTNhO4E/d/yzmnn1QYNe4B8niHoyje6SMrnYQnZl/gSLgoeOhTZGWI1lasBL1Loexfq46vn05czLi9GTI3gD
+    rundeck_runbook_private_key: |
+      -----BEGIN RSA PRIVATE KEY-----
+      MIIEoQIBAAKCAQEAprvoA+zIcpCdf9Z4s7qLXxv0iOuVuxqERA+u4wrTKR3sWUL6
+      +6NkQoGssoW6IY/5NcmA6LAQw/4Zrx0Xc45hxJJ1andnxvFNKwKKf0KcvmvNe+Tu
+      2G2rSFKBHMfW9j16GTaaR0SlV0TY8xg2QYWnTS5tgCG0FQiB263JRlpozbQcy3Uy
+      5ZNwEg/zFyyoCIjtB3yCvpMtyX8VoPYGYowtyP7tNMaHrLHNDUJ7KIdQUrF1IjL9
+      vpVxKjqeVDV8cQX+khkzYTuBP3f8s5p59UGDXuAfJ4h6Mo3ukjK52EJ2Zf4Ei4KH
+      joU2RliNZWrAS9S6HsX6uOr59OXMy4vRkyN4AwIDAQABAoIBACW2JIEWwjOfX/A1
+      KzHDhJhrc0CwwDoEglv+jBjQLviCyx1ZV/koeJnOSKhMNNA4hy5SODTo9bHOvDJu
+      SwqY7qYOVj5RaYiGtWR/+6FTCK7NJTnbiuYqz+3Ys1k2Hfmt5/rh7b0m2prFeKhr
+      FoJ1X2TGln+/n8KOHQj54qdl9YRo1fPA1/bsy6jCvy3gVK1X/eeSnJIUGh1wvpRT
+      NKjrFDz7hg7YMH/ndprdhp1aI2M26hTP+k/lSlfbBBEdw8zIzN7aTGgCLb9HOFZF
+      lbgNS2zjoYDTNzFnrn9Ayi9WHDJgpapuqJtfgzfh1E6tClTG7t7eqsBWAGT5RBY7
+      mhjp2UkCgYEA2Rc7vlc0tCGs/HgNT2/4Pq/wsCO3/GbE+Ar3EYdc4LR+pBd+hlAK
+      bRptDu6gsyhQPghaRI/QxSuscUafN76xVxBoOQq5TL0+7/fhBb9/+OVOgooN4yHz
+      Dwr25AHaRhyF2vBpMX34MEeNrVcwxqVES4u2VkXRXEDX1e0RZ12RoTUCgYEAxJ4o
+      BFqdWMMuylRQtndtylhMEy87fVlaAVAflKPsfwreSbrRcAvzGNK5w7QB2puVFzCb
+      pyMig/EPmiX1YNIZE8OKaJHorMoezidoNsAtspLeec6rhFmpQtoO0iggLcqntRSo
+      /b40CSqOFHZymtszMd9Im12EKYIUZ7kO+DuL01cCf2TpZ9wSrW0OOlshcw55/esl
+      3bwC3oN1QhoK/s4nHgVV4YhlY2sLyczte8R1KD4ffy1WtJ8qOuFsa7w8F8bR3Z2b
+      AteBJKGHVro1f2QsoFASR2xmwA3UuidD8YALXGs61v3uwvc+lx/aIwFwhjvQlu6H
+      AzsXOTqo6auHh4+E7y0CgYB9MoQiuZyFv8tUlLnMZmHnva+7a5EC8Vlpip6BZJwc
+      DUycQDRKl6FVBiG5py6jB/y4hoAmvi2lPGOF8XO9EitbtWC102sIU6+n79nhOyAe
+      HH1DrMD0hq9L3VQgp+JNpkSB/sTYxjuWNp3AE+hICRohQJ+YJsUYNTdPELyifjA8
+      AwKBgQC+z1YHwMwLB+NYxc4Rri57u+E9WmWqGI/LJ4MQSc0B4uR3xGF0n8t2hH31
+      NLTbaN04eHjXQICk2nlvLqc0hMXXcZEse6xCysqZ1t8PgJsEMXI8f1tjzkLxiWJX
+      nur/a4RsenneWNNEvHA93f7adVukd7/yNVTqInO03UTJ5y5CcA==
+      -----END RSA PRIVATE KEY-----
+    # CIS
+    rundeck_cis_enabled: True
+    rundeck_cis_jobs_repository: https://github.com/Mirantis/rundeck-cis-jobs.git
+    rundeck_cis_jobs_revision: master
+    rundeck_cis_openstack:
+      auth_url: ${_param:oss_openstack_auth_url}/auth/tokens
+      endpoint_type: ${_param:oss_openstack_endpoint_type}URL
+      username: ${_param:oss_openstack_username}
+      password: ${_param:oss_openstack_password}
+      project_name: ${_param:oss_openstack_project}
+      domain_id: ${_param:oss_openstack_domain_id}
+      cert: ${_param:oss_openstack_cert}
+      ssl_cert_file: cert.pem
+    rundeck_cis_os_docker_image: docker-prod-local.artifactory.mirantis.com/mirantis/oss/cis-openstack:latest
+
+    # In case of using DOP through external proxy address
+    rundeck_forward_iframe: False
+    rundeck_iframe_host: ${_param:openstack_proxy_address}
+    rundeck_iframe_port: ${_param:haproxy_rundeck_exposed_port}
+    rundeck_iframe_ssl: False
+
+    elasticsearch_http_bind_port: 9200
+    oss_jenkins_password: ${_param:jenkins_admin_password}
+    #TODO: set password for CICD gerrit login
+    # Switch to generic ElasticSearch
+    haproxy_elasticsearch_bind_host: ${_param:stacklight_monitor_address}
+    haproxy_elasticsearch_http_bind_port: 9200
+    elasticsearch_bind_host: ${_param:stacklight_monitor_address}
+    elasticsearch_binary_bind_port: 9300
+    elasticsearch_cluster_name: elasticsearch
+    rundeck_cis_elasticsearch_url: http://${_param:stacklight_monitor_address}:9200
+
+
+  devops_portal:
+    config:
+      service:
+        elasticsearch:
+          resolve_hostname: false

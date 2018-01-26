@@ -1,0 +1,16 @@
+classes:
+- system.glusterfs.cluster
+- cluster.sl.cicd.control.leader
+parameters:
+  _param:
+    cicd_database_id: 1
+    keepalived_vip_priority: 103
+    linux_system_codename: xenial
+    salt_master_host: 192.168.10.91
+    single_address: 172.16.10.96
+  linux:
+    system:
+      name: cid01
+      domain: sl.local
+      cluster: default
+      environment: prd

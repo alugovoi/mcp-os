@@ -11,7 +11,7 @@ parameters:
             type: workflow-scm
             discard:
               build:
-                keep_num: 100
+                keep_num: 20
             concurrent: true
             display_name: "Deploy - {{stack_name}} {{stack_type}}"
             scm:
@@ -100,7 +100,7 @@ parameters:
                 description: "Formulas revision to install on Salt Master bootstrap stage"
               EXTRA_FORMULAS:
                 type: string
-                default: ""
+                default: "maas memcached ntp nginx collectd sensu heka sphinx mysql grafana libvirt rsyslog glusterfs postfix xtrabackup freeipa prometheus telegraf elasticsearch kibana rundeck devops-portal rsync docker keepalived aptly jenkins gerrit artifactory influxdb horizon ceph"
               STATIC_MGMT_NETWORK:
                   type: boolean
                   default: 'false'
@@ -180,32 +180,3 @@ parameters:
                 description: "Run tests matched to pattern only"
                 default: ""
 
-              # TestRail vars
-              TESTRAIL_REPORT:
-                type: boolean
-                description: "Report test results to TestRail if true"
-                default: "false"
-              TESTRAIL_REPORTER_IMAGE:
-                type: string
-                description: "Testrail reporter docker image"
-                default: "alrem/xunit2testrail"
-              TESTRAIL_QA_CREDENTIALS:
-                type: string
-                description: "Credentials for results upload to testrail"
-                default: "oscore-qa-credentials"
-              TESTRAIL_MILESTONE:
-                type: string
-                description: "TestRail milestone"
-                default: "MCP1.1"
-              TESTRAIL_PLAN:
-                type: string
-                description: "TestRail test plan name. Will be generated if missing."
-                default: ""
-              TESTRAIL_GROUP:
-                type: string
-                description: "TestRail test group name."
-                default: "{{stack_name}}"
-              TESTRAIL_SUITE:
-                type: string
-                description: "TestRail test suite name"
-                default: "Tempest 16.0.0 with designate tests"

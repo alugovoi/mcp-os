@@ -1,0 +1,16 @@
+classes:
+- service.galera.master.cluster
+- cluster.sl.openstack.database
+parameters:
+  _param:
+    keepalived_vip_priority: 103
+    linux_system_codename: trusty
+    mysql_cluster_role: master
+    salt_master_host: 192.168.10.91
+    single_address: 192.168.10.51
+  linux:
+    system:
+      name: dbs01
+      domain: sl.local
+      cluster: default
+      environment: prd

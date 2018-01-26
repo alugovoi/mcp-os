@@ -8,11 +8,6 @@ parameters:
           name: test-salt-model-{{name}}
           template:
             type: workflow-scm
-            discard:
-              build:
-                keep_num: 50
-              artifact:
-                keep_num: 50
             scm:
               type: git
               url: "${_param:jenkins_gerrit_url}/mk/mk-pipelines"
@@ -86,11 +81,6 @@ parameters:
           name: test-salt-model-{{name}}
           template:
             type: workflow-scm
-            discard:
-             build:
-               keep_num: 50
-             artifact:
-               keep_num: 50
             scm:
               type: git
               url: "${_param:jenkins_gerrit_url}/mk/mk-pipelines"
@@ -129,9 +119,9 @@ parameters:
           template:
             discard:
              build:
-               keep_num: 50
+               keep_num: 20
              artifact:
-               keep_num: 50
+               keep_num: 20
             type: workflow-scm
             concurrent: true
             scm:

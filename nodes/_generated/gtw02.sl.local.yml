@@ -1,0 +1,14 @@
+classes:
+- cluster.sl.openstack.gateway
+parameters:
+  _param:
+    linux_system_codename: xenial
+    salt_master_host: 192.168.10.91
+    single_address: 192.168.10.225
+    tenant_address: 10.16.0.7
+  linux:
+    system:
+      name: gtw02
+      domain: sl.local
+      cluster: default
+      environment: prd

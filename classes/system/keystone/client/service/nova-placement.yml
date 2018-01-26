@@ -1,7 +1,6 @@
 parameters:
   _param:
     cluster_public_protocol: https
-    nova_service_protocol: http
   keystone:
     client:
       server:
@@ -19,8 +18,6 @@ parameters:
                 internal_address: ${_param:nova_service_host}
                 internal_port: '8778'
                 internal_path: ''
-                internal_protocol: ${_param:nova_service_protocol}
-                admin_protocol: ${_param:nova_service_protocol}
                 admin_address: ${_param:nova_service_host}
                 admin_port: '8778'
                 admin_path: ''

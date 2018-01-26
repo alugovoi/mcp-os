@@ -11,6 +11,7 @@ parameters:
           name: ${_param:cicd_control_node01_hostname}
           domain: ${_param:cluster_domain}
           classes:
+          - system.glusterfs.cluster
           - cluster.${_param:cluster_name}.cicd.control.leader
           params:
             salt_master_host: ${_param:reclass_config_master}
@@ -22,6 +23,7 @@ parameters:
           name: ${_param:cicd_control_node02_hostname}
           domain: ${_param:cluster_domain}
           classes:
+          - system.glusterfs.cluster
           - cluster.${_param:cluster_name}.cicd.control.manager
           params:
             salt_master_host: ${_param:reclass_config_master}
@@ -33,6 +35,7 @@ parameters:
           name: ${_param:cicd_control_node03_hostname}
           domain: ${_param:cluster_domain}
           classes:
+          - system.glusterfs.cluster
           - cluster.${_param:cluster_name}.cicd.control.manager
           params:
             salt_master_host: ${_param:reclass_config_master}
